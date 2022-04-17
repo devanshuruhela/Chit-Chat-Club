@@ -11,4 +11,24 @@
   font-weight: normal;
   line-height: 1.6;
   color: #c4c5c5;
+  margin-bottom: 30px;
+}
+
+.signin-container
+{
+  margin-top: 20px;
+}
+
+.hasinvite
+{
+  color: #0077FF;
+}
+
+.signin-link
+{
+  color: #0077FF;
+  font-weight: bold;
+  text-decoration: none;
+  margin-left: 10px;
+
 }
