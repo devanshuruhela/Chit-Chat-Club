@@ -8,7 +8,7 @@ const Navigation = () => {
     <nav className=' navbar container'>
       <Link className='linkstyle' to='/'>
         <img src={Logo} alt="logo" className='navbar'/>
-        <span className='linkheading'>Chit Chat Club</span>
+        <span className='linkheading'>Chit-Chat Club</span>
       </Link>
     </nav>
   )
