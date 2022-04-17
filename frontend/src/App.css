@@ -31,3 +31,10 @@ img{
   max-width: 100%;
   height: auto;
 }
+
+.container
+{
+  width: 1200px;
+  max-width: 90%;
+  margin: 0 auto;
+}

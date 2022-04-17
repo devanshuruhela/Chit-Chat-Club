@@ -1,0 +1,19 @@
+.navbar
+{
+  padding: 20px 0;
+}
+
+.linkstyle{
+    color:#fff;
+    text-decoration: none;
+    font-weight: bold;
+    font-size: 22px;
+    display: flex;
+    align-items: center;
+    user-select: none;
+  }
+
+  .linkheading
+  {
+    margin-left: 10px;
+  }
