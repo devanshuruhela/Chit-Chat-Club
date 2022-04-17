@@ -1,16 +1,15 @@
 import React from "react";
 import "./home.styles.css";
+import Card from "../../Components/Shared/Card/card.component";
 import logo from "../../images/logo.png";
 import arrow from '../../images/arrow-forward.png'
 import { Link } from "react-router-dom";
+
 const Home = () => {
   return (
     <div className="card-container">
-    <div className="card">
-      <div className="heading-container">
-        <img src={logo} alt="emoji" />
-        <h1 className="heading">Welcome to Chit-Chat Club!</h1>
-      </div>
+      <Card logo={logo} heading={`Welcome to Chit-Chat Club!`}>
+        <div className="card">
       <p className="text">
         We’re working hard to get Chit-Chat Club ready for everyone!
         While we wrap up the finishing youches, we’re adding people
@@ -27,6 +26,7 @@ const Home = () => {
         <Link to='/login'>Sign in</Link>
       </div>
     </div>
+      </Card>
     </div>
   );
 };
