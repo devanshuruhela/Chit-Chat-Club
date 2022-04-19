@@ -7,9 +7,7 @@ import {
   useLocation,
 } from "react-router-dom";
 import Home from "./pages/Home/home";
-import Register from "./pages/Register/register";
 import Navigation from "./Components/Shared/Navigation/navigation.component";
-import Login from "./pages/Login/login";
 import Authenticate from "./pages/Authenticate/authenticate";
 import Activate from "./pages/Activate/activate";
 import Rooms from "./pages/Rooms/rooms";
@@ -34,8 +32,6 @@ function App() {
             </GuestRoute>
           }
         />
-        {/* <Route path="/register" element={<Register />} />
-        <Route path="/login" element={<Login />} /> */}
         <Route
           path="/authenticate"
           element={
