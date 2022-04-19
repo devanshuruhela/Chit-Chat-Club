@@ -10,7 +10,7 @@ const Home = () => {
   const navigate= useNavigate();
   function startRegister()
   {
-    navigate('/register')
+    navigate('/authenticate')
     // console.log('Clicked');
   }
   return (
@@ -22,13 +22,13 @@ const Home = () => {
             make sure nothing breaks
           </p>
           <div>
-            <Button onClick={startRegister} btntext='Get your username'></Button>
+            <Button onClick={startRegister} btntext="Let's Go"></Button>
           </div>
           <div className="signin-container">
             <span className="hasinvite">Have an invite text?</span>
-            <Link className="signin-link" to="/login">
+            {/* <Link className="signin-link" to="/login">
               Sign in
-            </Link>
+            </Link> */}
           </div>
       </Card>
     </div>
