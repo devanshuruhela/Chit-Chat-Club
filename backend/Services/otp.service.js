@@ -1,5 +1,5 @@
 const crypto = require('crypto');
-
+const hashService = require('./hash.service');
 const smssid = process.env.SMS_SID;
 const authtoken = process.env.SMS_AUTH_TOKEN;
 const twilio = require('twilio')(smssid , authtoken , {
@@ -20,7 +20,12 @@ class OtpService
     })
   }
 
-  verifyOtp() {}
+  verifyOtp(hashedOtp , data) {
+    let computedHash = hashService.hashOtp(data);
+
+    return (computedHash === hashedOtp)
+
+  }
 
 }
 
