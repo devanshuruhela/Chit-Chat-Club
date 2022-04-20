@@ -1,5 +1,7 @@
 const OtpService = require('../Services/otp.service');
 const HashService = require('../Services/hash.service');
+const otpService = require('../Services/otp.service');
+const express = require('express');
 class AuthController{
   async sendOtp(req,res)
   {
@@ -16,7 +18,16 @@ class AuthController{
     const data = `${phone}.${otp}.${expires}`
     const hash = HashService.hashOtp(data);
 
-    res.send({hash})
+    try {
+      await otpService.sendBySms(phone, otp);
+      res.json({
+        hash:`${hash}.${expires}`,
+        phone,
+      })
+    } catch (error) {
+      console.log(error)
+      res.status(500).json({message:"message sending failed"})
+    }
   }
 }
 
