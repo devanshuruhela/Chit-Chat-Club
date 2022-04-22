@@ -4,13 +4,19 @@ import Button from '../../../../Components/Shared/Button/button.component'
 import logo from '../../../../images/phone.png'
 import TextInput from '../../../../Components/Shared/Textinput/textinput.component'
 import { sendOtp } from '../../../../Http/endpoints'
+
+import { useDispatch } from 'react-redux';
+import { setOtp } from '../../../../store/authSlice'
 const Phone = ({onNext}) => {
   const [phoneNum , setPhoneNum] = useState('');
+
+  const dispatch = useDispatch();
 
   async function submit()
   {
     const {data} = await sendOtp({phone:phoneNum});
     console.log(data);
+    dispatch(setOtp({phone:data.phone , hash:data.hash}))
     // onNext();
   }
   return (
