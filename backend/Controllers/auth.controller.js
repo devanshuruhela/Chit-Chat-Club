@@ -22,10 +22,11 @@ class AuthController{
     const hash = HashService.hashOtp(data);
 
     try {
-      await otpService.sendBySms(phone, otp);
+      // await otpService.sendBySms(phone, otp);
       res.json({
         hash:`${hash}.${expires}`,
         phone,
+        otp
       })
     } catch (error) {
       console.log(error)
