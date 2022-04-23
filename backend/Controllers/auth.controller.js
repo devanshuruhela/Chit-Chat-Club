@@ -60,8 +60,6 @@ class AuthController{
     }
 
     let user;
-    // let accessToken;
-    // let refreshToken;
 
     try {
       user = await userService.finduser({phone});
@@ -77,13 +75,22 @@ class AuthController{
     //JWT token
     const {accessToken , refreshToken} = tokenService.generateToken({_id:user._id , activated: false});
 
+    await tokenService.storeRefreshToken(refreshToken , user._id);
+
     res.cookie('refreshtoken',refreshToken , 
     {
       maxAge: 1000*60**60*24*30,
       httpOnly:true,
     })
+
+    res.cookie("accesstoken", accessToken, {
+      maxAge: 1000 * 60 ** 60 * 24 * 30,
+      httpOnly: true,
+    });
+
+
     const userDto = new UserDto(user)
-    res.json({accessToken , user:userDto});
+    res.json({user:userDto , auth:true});
 
   }
 }

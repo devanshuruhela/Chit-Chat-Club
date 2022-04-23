@@ -8,6 +8,7 @@ PORT = process.env.PORT || 5000;
 
 const corsOption = {
   origin: [process.env.FRONT_URL],
+  credentials:true
 };
 app.use(cors(corsOption));
 
