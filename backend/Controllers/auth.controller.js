@@ -2,7 +2,7 @@ const OtpService = require('../Services/otp.service');
 const HashService = require('../Services/hash.service');
 const otpService = require('../Services/otp.service');
 const userService = require('../Services/user.service')
-
+const UserDto = require('../dtos/user.dtos')
 const tokenService = require('../Services/token.service')
 const express = require('express');
 class AuthController{
@@ -82,8 +82,8 @@ class AuthController{
       maxAge: 1000*60**60*24*30,
       httpOnly:true,
     })
-
-    res.json({accessToken , user});
+    const userDto = new UserDto(user)
+    res.json({accessToken , user:userDto});
 
   }
 }

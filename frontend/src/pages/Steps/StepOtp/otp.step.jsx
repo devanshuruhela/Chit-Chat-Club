@@ -5,20 +5,22 @@ import lock from '../../../images/lock-emoji.png'
 import Button from '../../../Components/Shared/Button/button.component';
 import { verifyOtp } from '../../../Http/endpoints';
 import './otp.styles.css'
-import { useSelector } from 'react-redux';
-const StepOtp = ({onNext}) => {
+import { useDispatch, useSelector } from 'react-redux';
+import {setAuth} from '../../../store/authSlice';
+const StepOtp = () => {
   const[otp , setOtp] = useState('');
 
   const {phone , hash} = useSelector((state)=> state.auth.otp);
+  const dispatch  = useDispatch();
   async function submit()
   {
     try {
       const {data} = await verifyOtp({otp ,phone, hash})
-      console.log(data)
+      dispatch(setAuth(data));
     } catch (error) {
       console.log(error)
     }
-    // onNext();
+    
   }
   return (
     <>
