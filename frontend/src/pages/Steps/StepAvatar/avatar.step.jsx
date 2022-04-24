@@ -1,24 +1,40 @@
 import React, { useState } from 'react'
 import Card from '../../../Components/Shared/Card/card.component'
 import Button from '../../../Components/Shared/Button/button.component'
-import TextInput from '../../../Components/Shared/Textinput/textinput.component'
 import avatarimage from '../../../images/monkey-avatar.png'
 import emoji from '../../../images/monkey-emoji.png'
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
+import setAvatar from '../../../store/activateSlice'
+import setAuth from '../../../store/authSlice'
+import { activate } from '../../../Http/endpoints'
 import './avatar.styles.css'
 const StepAvatar = ({onNext}) => {
-  const {name} = useSelector(state => state.activate)
+  const dispatch = useDispatch()
+  const {name , avatar} = useSelector(state => state.activate)
   const [image , setImage] = useState(avatarimage)
-  function submit()
+  async function submit()
   {
-
+    try {
+      const {data} = await activate({name , avatar})
+      if (data.auth) {
+                dispatch(setAuth(data));
+            }
+    } catch (error) {
+      console.log(error)
+    }
   }
 
-  function changeimage(event)
+  function changeimage(e)
   {
-    const file = event.target.files[0];
-    
-    console.log(event)
+    const file = e.target.files[0];
+    const reader = new FileReader();
+    reader.readAsDataURL(file);
+    reader.onloadend = function()
+    {
+      setImage(reader.result);
+      dispatch(setAvatar(reader.result))
+    }
+    console.log(e)
   }
   return (
     <div className='cardContainer'>

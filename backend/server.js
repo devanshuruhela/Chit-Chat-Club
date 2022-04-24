@@ -3,9 +3,10 @@ const DbConnect = require('./database')
 const express = require('express');
 const app = express();
 const cors = require('cors')
-const router  =require('./routes')
+const router =require('./routes')
+const cookieParser = require('cookie-parser')
 PORT = process.env.PORT || 5000;
-
+app.use(cookieParser());
 const corsOption = {
   origin: [process.env.FRONT_URL],
   credentials:true
@@ -13,7 +14,7 @@ const corsOption = {
 app.use(cors(corsOption));
 
 DbConnect();
-app.use(express.json())
+app.use(express.json({limit:'8mb'}))
 app.get('/' ,(req , res)=>
 {
   res.send("Hello from server")
