@@ -5,6 +5,7 @@ import TextInput from '../../../Components/Shared/Textinput/textinput.component'
 import emoji from '../../../images/goggle-emoji.png'
 import { useDispatch , useSelector } from 'react-redux'
 import { setName } from '../../../store/activateSlice'
+import './name.styles.css'
 const StepName = ({onNext}) => {
   const {name} = useSelector((state)=> state.activate)
   const [fullname, setFullName] = useState(name);
@@ -19,10 +20,10 @@ const StepName = ({onNext}) => {
     onNext();
   }
   return (
-    <>
+    <div className='cardContainer'>
     <Card logo={emoji} heading="What's your full name?">
       <TextInput type='text' value={fullname} onChange={(e)=>setFullName(e.target.value)} />
-      <p className='bottompara'>
+      <p className='para'>
         People use real name at chit chat club!
       </p>
       <div className="actionbtn">
@@ -30,7 +31,7 @@ const StepName = ({onNext}) => {
       </div>
       
       </Card>
-    </>
+    </div>
   )
 }
 
