@@ -4,7 +4,6 @@ const otpService = require('../Services/otp.service');
 const userService = require('../Services/user.service')
 const UserDto = require('../dtos/user.dtos')
 const tokenService = require('../Services/token.service')
-const express = require('express');
 class AuthController{
   async sendOtp(req,res)
   {

@@ -12,6 +12,22 @@ const StepAvatar = ({onNext}) => {
   const dispatch = useDispatch()
   const {name , avatar} = useSelector(state => state.activate)
   const [image , setImage] = useState(avatarimage)
+  
+
+  function changeimage(e)
+  {
+    const file = e.target.files[0];
+    console.log(e)
+    const reader = new FileReader();
+    reader.readAsDataURL(file);
+    reader.onloadend = function()
+    {
+      console.log(reader.result)
+      setImage(reader.result);
+      dispatch(setAvatar(reader.result))
+    }
+    
+  }
   async function submit()
   {
     try {
@@ -22,19 +38,6 @@ const StepAvatar = ({onNext}) => {
     } catch (error) {
       console.log(error)
     }
-  }
-
-  function changeimage(e)
-  {
-    const file = e.target.files[0];
-    const reader = new FileReader();
-    reader.readAsDataURL(file);
-    reader.onloadend = function()
-    {
-      setImage(reader.result);
-      dispatch(setAvatar(reader.result))
-    }
-    console.log(e)
   }
   return (
     <div className='cardContainer'>
