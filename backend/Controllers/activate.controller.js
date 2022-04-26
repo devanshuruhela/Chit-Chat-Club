@@ -27,20 +27,20 @@ class ActivateController
     const userId = req.user._id
     //updateuser
     try {
-      const user = await userService.finduser({ _id: userId });
-      if (!user) {
+      const User = await userService.finduser({ _id: userId });
+      if (!User) {
         res.status(404).json({ message: "user not found" });
       }
-      user.activated = true;
-      user.name = name;
-      user.avatar = `/storage/${imagePath}`;
-      user.save();
-      
+      User.activated = true;
+      User.name = name;
+      User.avatar = `/storage/${imagePath}`;
+      User.save();
+      res.json({user: new UserDto(User) , auth:true})
     } catch (error) {
-      res.status(500).json({ message: "something went wrong" });
+       res.status(500).json({ message: "something went wrong" });
     }
 
-    res.json({user: new UserDto(user) , auth:true})
+    
   }
 }
 
