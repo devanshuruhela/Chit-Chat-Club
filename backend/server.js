@@ -12,7 +12,7 @@ const corsOption = {
   credentials:true
 };
 app.use(cors(corsOption));
-
+app.use('/storage',express.static('storage'))
 DbConnect();
 app.use(express.json({limit:'8mb'}))
 app.get('/' ,(req , res)=>

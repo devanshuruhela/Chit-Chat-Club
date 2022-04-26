@@ -8,9 +8,9 @@ import {setAvatar} from '../../../store/activateSlice'
 import {setAuth} from '../../../store/authSlice'
 import { activate } from '../../../Http/endpoints'
 import './avatar.styles.css'
-const StepAvatar = ({onNext}) => {
+const StepAvatar = () => {
   const dispatch = useDispatch()
-  const {name , avatar} = useSelector(state => state.activate)
+  const {name , avatar} = useSelector((state) => state.activate)
   const [image , setImage] = useState(avatarimage)
   
 
@@ -22,7 +22,7 @@ const StepAvatar = ({onNext}) => {
     reader.readAsDataURL(file);
     reader.onloadend = function()
     {
-      console.log(reader.result)
+      // console.log(reader.result)
       setImage(reader.result);
       dispatch(setAvatar(reader.result))
     }
