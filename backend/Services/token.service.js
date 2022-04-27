@@ -33,6 +33,20 @@ class tokenService
   {
     return jwt.verify(token , accessTokenSecret);
   }
+  async verifyRefreshToken(token)
+  {
+    return jwt.verify(token, refreshTokenSecret);
+  }
+
+  async findRefreshToken(userId, refreshToken)
+  {
+    return await refreshModel.findOne({_id:userId , token:refreshToken});
+  }
+
+  async updateRefreshToken(token, userId)
+  {
+    return await refreshModel.updateOne({userId:userId} , {token:refreshToken})
+  }
 }
 
 module.exports = new tokenService();

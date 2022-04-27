@@ -92,6 +92,53 @@ class AuthController{
     res.json({user:userDto , auth:true});
 
   }
+
+  async refresh(req,res)
+  {
+    const {refreshToken : refreshTokenFromCookies} = req.cookies;
+    let userData;
+    try {
+      userData =  await tokenService.verifyRefreshToken(refreshTokenFromCookies)
+    } catch (error) {
+      return res.status(401).json({message:'Invalid token!'})
+    }
+
+    try {
+      const token  = await tokenService.findRefreshToken(userData._id ,  refreshTokenFromCookies);
+      if(!token)
+      {
+        return res.status(401).json({ message: "Invalid token" });
+      }
+    } catch (error) {
+      return res.status(500).json({message:'Internal Error'});
+    }
+
+    const user = await userService.finduser({_id : userData._id})
+    if(!user)
+    {
+      return res.status(404).json({ message: "Invalid User!" });
+    }
+
+    const {refreshToken  , accessToken} = tokenService.generateToken({_id:userData._id})
+
+    try {
+      await tokenService.updateRefreshToken(refreshToken)
+    } catch (error) {
+      return res.status(500).json({ message: "Internal Error" });
+    }
+     res.cookie("refreshToken", refreshToken, {
+       maxAge: 1000 * 60 ** 60 * 24 * 30,
+       httpOnly: true,
+     });
+
+     res.cookie("accessToken", accessToken, {
+       maxAge: 1000 * 60 ** 60 * 24 * 30,
+       httpOnly: true,
+     });
+
+     const userDto = new UserDto(user);
+     res.json({ user: userDto, auth: true });
+  }
 }
 
 
