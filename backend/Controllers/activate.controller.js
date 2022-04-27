@@ -20,23 +20,23 @@ class ActivateController
     try {
       const jimRes = await Jimp.read(buffer);
       jimRes.resize(150 , Jimp.AUTO).write(path.resolve(__dirname , `../storage/${imagePath}`))
-    } catch (error) {
+    } catch (err) {
       res.status(500).json({message:'Image not processed'})
     }
 
     const userId = req.user._id
     //updateuser
     try {
-      const User = await userService.finduser({ _id: userId });
-      if (!User) {
+      const user = await userService.finduser({ _id: userId });
+      if (!user) {
         res.status(404).json({ message: "user not found" });
       }
-      User.activated = true;
-      User.name = name;
-      User.avatar = `/storage/${imagePath}`;
-      User.save();
-      res.json({user: new UserDto(User) , auth:true})
-    } catch (error) {
+      user.activated = true;
+      user.name = name;
+      user.avatar = `/storage/${imagePath}`;
+      user.save();
+      res.json({user: new UserDto(user) , auth:true})
+    } catch (err) {
        res.status(500).json({ message: "something went wrong" });
     }
 
@@ -44,4 +44,4 @@ class ActivateController
   }
 }
 
-module.exports = new ActivateController;
+module.exports = new ActivateController();
