@@ -8,11 +8,12 @@ import {setAvatar} from '../../../store/activateSlice'
 import {setAuth} from '../../../store/authSlice'
 import { activate } from '../../../Http/endpoints'
 import './avatar.styles.css'
+import Loader from '../../../Components/Shared/Loader/loader'
 const StepAvatar = () => {
   const dispatch = useDispatch()
   const {name , avatar} = useSelector((state) => state.activate)
   const [image , setImage] = useState(avatarimage)
-  
+  const [loader , setloader] = useState(false);
 
   function changeimage(e)
   {
@@ -30,15 +31,27 @@ const StepAvatar = () => {
   }
   async function submit()
   {
+    if(!image || !name)
+    return
+    setloader(true)
     try {
       const {data} = await activate({name , avatar})
       if (data.auth) {
                 dispatch(setAuth(data));
             }
+          
     } catch (error) {
       console.log(error)
+      
+    }
+    finally
+    {
+      setloader(false)
     }
   }
+
+  if(loader)
+  return <Loader message='Activation in Progress...'/>
   return (
     <div className='cardContainer'>
     <Card logo={emoji} heading={`Okay, ${name}`}>
