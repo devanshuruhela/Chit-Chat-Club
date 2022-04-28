@@ -12,9 +12,14 @@ import Authenticate from "./pages/Authenticate/authenticate";
 import Activate from "./pages/Activate/activate";
 import Rooms from "./pages/Rooms/rooms";
 import { useSelector } from "react-redux";
+import { useLoadingRefresh } from "./Hooks/useLoadingRefresh";
 
 function App() {
+  
+  const {loading}  = useLoadingRefresh()
   return (
+    loading?('Loading...'):
+    (
     <BrowserRouter>
       <Navigation />
       <Routes>
@@ -53,6 +58,7 @@ function App() {
         ></Route>
       </Routes>
     </BrowserRouter>
+    )
   );
 }
 
