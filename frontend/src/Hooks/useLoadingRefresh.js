@@ -5,8 +5,9 @@ import { setAuth } from "../store/authSlice";
 
 export function useLoadingRefresh()
 {
-  const disptach = useDispatch();
+  
   const [loading, setloading] = useState(true);
+  const disptach = useDispatch();
   useEffect(()=>
   {
     (async ()=>
@@ -18,8 +19,8 @@ export function useLoadingRefresh()
         );
         disptach(setAuth(data));
         setloading(false)
-      } catch (error) {
-        console.log(error)
+      } catch (err) {
+        console.log(err)
         setloading(false)
       }
     })()

@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import Card from '../../../Components/Shared/Card/card.component'
 import Button from '../../../Components/Shared/Button/button.component'
 import avatarimage from '../../../images/monkey-avatar.png'
@@ -14,6 +14,7 @@ const StepAvatar = () => {
   const {name , avatar} = useSelector((state) => state.activate)
   const [image , setImage] = useState(avatarimage)
   const [loader , setloader] = useState(false);
+  const [mounted , setMounted ] = useState(false)
 
   function changeimage(e)
   {
@@ -37,7 +38,8 @@ const StepAvatar = () => {
     try {
       const {data} = await activate({name , avatar})
       if (data.auth) {
-                dispatch(setAuth(data));
+        if(!mounted){
+                dispatch(setAuth(data));}
             }
           
     } catch (error) {
@@ -50,6 +52,13 @@ const StepAvatar = () => {
     }
   }
 
+  useEffect(()=>
+  {
+    return () =>
+    {
+      setMounted(true)
+    }
+  },[])
   if(loader)
   return <Loader message='Activation in Progress...'/>
   return (
