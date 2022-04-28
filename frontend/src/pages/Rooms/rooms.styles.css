@@ -1,0 +1,71 @@
+.left
+{
+  display: flex;
+  align-items: center;
+
+}
+.roomsHeader
+{
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.heading
+{
+  font-size: 20px;
+  font-weight: bold;
+  position: relative
+}
+
+.searchbox
+{
+  background: #262626;
+  margin-left: 20px;
+  display: flex;
+  align-items: center;
+  padding: 0 10px;
+  min-width: 300px;
+  border-radius: 20px;
+}
+
+.searchinput
+{
+  background: transparent;
+  border: none;
+  outline: none;
+  padding: 10px;
+  color: #fff;
+  width: 100%;
+}
+
+.heading::after{
+  content:'';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 55%;
+  height: 4px;
+  bottom: -10px;
+  background:#0077ff;
+}
+
+.Newroombtn
+{
+  display: flex;
+  align-items: center;
+  background: #20bd5f;
+  padding:5px 20px;
+  border-radius: 20px;
+  color: #fff;
+  transition: all 0.2s ease-in-out;
+}
+
+.Newroombtn span{
+  font-size: 16px;
+  margin-left: 10px;
+}
+
+.Newroombtn:hover
+{
+  filter: brightness(80%);
+}
