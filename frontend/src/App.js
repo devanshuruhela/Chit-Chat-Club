@@ -13,13 +13,13 @@ import Activate from "./pages/Activate/activate";
 import Rooms from "./pages/Rooms/rooms";
 import { useSelector } from "react-redux";
 import { useLoadingRefresh } from "./Hooks/useLoadingRefresh";
+import Loader from "./Components/Shared/Loader/loader";
 
 function App() {
-  
   const {loading}  = useLoadingRefresh()
-  return (
-    loading?('Loading...'):
-    (
+  return loading ? (
+    <Loader message="Loading, please wait..." />
+  ) : (
     <BrowserRouter>
       <Navigation />
       <Routes>
@@ -58,7 +58,6 @@ function App() {
         ></Route>
       </Routes>
     </BrowserRouter>
-    )
   );
 }
 
