@@ -122,7 +122,7 @@ class AuthController{
     const {refreshToken  , accessToken} = tokenService.generateToken({_id:userData._id})
 
     try {
-      await tokenService.updateRefreshToken(refreshToken)
+      await tokenService.updateRefreshToken( userData._id , refreshToken)
     } catch (error) {
       return res.status(500).json({ message: "Internal Error" });
     }
