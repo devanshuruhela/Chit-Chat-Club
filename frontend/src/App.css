@@ -1,8 +1,10 @@
 @import url('https://fonts.googleapis.com/css2?family=Poppins&display=swap');
-
-html
+*
 {
   box-sizing: border-box;
+}
+html
+{
   font-size: 16px;
   zoom: 0.9; /* Old IE only */
     -moz-transform: scale(0.9);

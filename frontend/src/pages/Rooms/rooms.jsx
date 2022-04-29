@@ -1,9 +1,10 @@
-import React from 'react'
+import React, { useState } from 'react'
 import './rooms.styles.css'
 import searchicon from '../../images/search-icon.png'
 import addroom from '../../images/add-room-icon.png'
 import monkey from '../../images/monkey-avatar.png'
 import RoomCard from '../../Components/Roomcard/roomcard.component'
+import RoomsModal from '../../Components/AddRoomModel/roomModel.compoenent'
 const rooms = [
     {
         id: 1,
@@ -75,6 +76,13 @@ const rooms = [
     },
 ];
 const Rooms = () => {
+
+  const [showmodal , setmodal]  = useState(false);
+
+  function openmodal()
+  {
+    setmodal(true);
+  }
   return (
     <>
     <div className="container">
@@ -87,7 +95,7 @@ const Rooms = () => {
           </div>
         </div>
         <div className="right">
-          <button className='Newroombtn'>
+          <button className='Newroombtn' onClick={openmodal}>
             <img src={addroom} alt="addroom" />
             <span>Start a Room</span>
           </button>
@@ -95,15 +103,12 @@ const Rooms = () => {
       </div>
       <div className='roomsContainer'>
         {rooms.map((room)=>(
-          <>
-          <RoomCard key={room.id} room={room}  />
-          <RoomCard key={room.id} room={room}  />
-          <RoomCard key={room.id} room={room}  />
+          <RoomCard key={room.id} room={room}  />          
           
-          </>
         ))}
       </div>
     </div>
+    {showmodal && <RoomsModal/>}
     </>
   )
 }

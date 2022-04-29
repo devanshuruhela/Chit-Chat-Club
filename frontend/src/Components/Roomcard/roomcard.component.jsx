@@ -9,13 +9,13 @@ const RoomCard = ({room}) => {
       <div className="speakers">
         <div className="avatarimg">
         {room.speakers.map((speaker) =>(
-          <img src={speaker.avatar} alt="speaker-avatar" />
+          <img key={speaker.id} src={speaker.avatar} alt="speaker-avatar" />
         ))}</div>
         <div className="names">
           {room.speakers.map((speaker) =>(
-          <div className="namecontainer">
+          <div key={speaker.id}  className="namecontainer">
             <span>{ speaker.name}</span>
-            <img key={speaker.id} src={chatbubble} alt="chat-bubble" />
+            <img src={chatbubble} alt="chat-bubble" />
           </div>
         ))}
         </div>
