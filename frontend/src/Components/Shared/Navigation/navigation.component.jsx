@@ -6,9 +6,10 @@ import { logout } from '../../../Http/endpoints'
 import { useDispatch, useSelector } from 'react-redux'
 import {setAuth} from '../../../store/authSlice'
 import logoutlogo from '../../../images/logout.png'
+import monkey from '../../../images/monkey-avatar.png'
 const Navigation = () => {
   const dispatch  = useDispatch();
-  const {isAuth , user} = useSelector((state) => state.auth)
+  const { isAuth, user} = useSelector((state) => state.auth)
   async function logoutUser()
   {
     try {
@@ -24,15 +25,17 @@ const Navigation = () => {
         <img src={Logo} alt="logo" className='navbar'/>
         <span className='linkheading'>Chit-Chat Club</span>
       </Link>
-      <div className="navRight">
-        <h3>{user.name}</h3>
+  {isAuth&& <div className="navRight">
+        <h3>{user?.name}</h3>
         <Link to='/'>
-          <img src={user.avatar} className='avatar' width="40" height="40" alt="avatar" />
+          <img src={user?.avatar
+                                    ? user.avatar
+                                    :monkey} className='avatar' width="40" height="40" alt="avatar" />
         </Link>
         <button className='logoutbtn' onClick = {logoutUser}>
           <img src={logoutlogo} alt="logout button" />
         </button>
-      </div>
+      </div>}
       
     </nav>
   )
