@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import './roomModel.styles.css'
 import TextInput from '../Shared/Textinput/textinput.component'
 import open from '../../images/globe.png'
@@ -7,6 +7,13 @@ import locked from '../../images/lock.png'
 import start from '../../images/celebration.png'
 import closebtn from '../../images/close.png'
 const RoomsModal = ({onclose}) => {
+  const [roomType , setRoomType] = useState('open');
+  const [topic , setTopic] =useState('');
+
+  function createRoom()
+  {
+
+  }
   return (
     <div className='modalMask'>
       <div className="modalBody">
@@ -15,18 +22,18 @@ const RoomsModal = ({onclose}) => {
         </button>
         <div className="modalContent">
           <h3 className='modelheading'>Enter the topic to be disscussed</h3>
-          <TextInput fullwidth='true'/>
+          <TextInput fullwidth='true' value={topic} onChange={(e)=>setTopic(e.target.value)}/>
         <h2 className='roomtypesheading'>Room types</h2>
         <div className="roomtypes">
-          <div className="typebox">
+          <div onClick={()=>setRoomType('open')} className={`typebox ${roomType==='open'?'active':''}`}>
             <img src={open} alt="open room" />
             <span>Open</span>
           </div>
-          <div className="typebox">
+          <div onClick={()=>setRoomType('social')} className={`typebox ${roomType==='social'?'active':''}`}>
             <img src={social} alt="Social room" />
             <span>Social</span>
           </div>
-          <div className="typebox">
+          <div onClick={()=>setRoomType('private')} className={`typebox ${roomType==='private'?'active':''}`}>
             <img src={locked} alt="Private room" />
             <span>Private</span>
           </div>
@@ -34,7 +41,7 @@ const RoomsModal = ({onclose}) => {
         </div>
         <div className="modalFooter">
           <h2>Start a room, open to everyone</h2>
-          <button className='startbtn'>
+          <button className='startbtn' onClick={createRoom}>
             <img src={start} alt="start button"  />Lets go
           </button>
         </div>
