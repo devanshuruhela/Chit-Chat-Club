@@ -108,7 +108,7 @@ const Rooms = () => {
         ))}
       </div>
     </div>
-    {showmodal && <RoomsModal/>}
+    {showmodal && <RoomsModal onclose={()=>setmodal(false)}/>}
     </>
   )
 }

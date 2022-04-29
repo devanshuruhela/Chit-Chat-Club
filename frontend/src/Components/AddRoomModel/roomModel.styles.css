@@ -11,11 +11,23 @@
   justify-content: center;
 }
 
+.closemodal
+{
+    position: absolute;
+    right: 3px;
+    top: 8px;
+    background: none;
+}
+
 .modalBody
 {
   width: 50%;
   max-width: 500px;
   background: #1d1d1d;
+  padding: 5px;
+  top: 10rem;
+  position: relative;
+  border-radius: 10px;
 }
 
 .modalContent
@@ -23,4 +35,71 @@
   padding: 30px;
   border-bottom: 2px solid #262626;
   
+}
+
+.roomtypes
+{
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 30px;
+}
+
+.typebox
+{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background: #262626;
+  padding: 10px;
+  border-radius: 10px;
+  cursor: pointer;
+}
+.typebox.active
+{
+  background: #262626;
+}
+.modalheading
+{
+  margin-bottom:5px ;
+}
+
+.roomtypesheading{
+  margin: 10px 0;
+  font-size: 18px;
+  font-weight: bold;
+}
+
+.modalFooter h2{
+  margin-bottom: 20px;
+  font-size: 20px;
+  font-weight: bold;
+}
+
+.modalFooter
+{
+  padding: 30px;
+  text-align: center;
+}
+
+.startbtn
+{
+    background: #20bd5f;
+    color: #fff;
+    display: flex;
+    align-items: center;
+    width: 200px;
+    justify-content: center;
+    padding: 7px 10px;
+    border-radius: 20px;
+    margin: 0 auto;
+    transition: all 0.3s ease-in-out;
+}
+
+.startbtn span {
+    margin-left: 5px;
+    font-weight: bold;
+}
+
+.startbtn:hover{
+  filter: brightness(80%);
 }
