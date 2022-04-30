@@ -21,7 +21,7 @@ const RoomsModal = ({onclose}) => {
       const {data} = await create({topic , roomType});
       console.log(data)
     } catch (error) {
-      console.log(error.message)
+      console.log(error)
     }
   }
   return (
