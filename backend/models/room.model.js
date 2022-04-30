@@ -9,7 +9,8 @@ const roomSchema = Schema(
     speakers:{
       type:[
         {
-          type:Schema.Types.ObjectId, ref:'User',
+          type:Schema.Types.ObjectId, 
+          ref:'User',
         }
       ],
       required:false,

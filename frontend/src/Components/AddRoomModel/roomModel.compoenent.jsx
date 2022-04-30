@@ -20,7 +20,7 @@ const RoomsModal = ({onclose}) => {
     }
     try {
       const {data} = await create({topic , roomType});
-      navigate(`/room/${data.id}` , {replace:true})
+      navigate(`/room/${data.id}`)
       console.log(data)
     } catch (error) {
       console.log(error)
