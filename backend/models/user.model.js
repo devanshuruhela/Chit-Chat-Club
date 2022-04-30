@@ -4,10 +4,10 @@ const Schema = mongoose.Schema;
 
 const userSchema = Schema(
   {
-    phone: { type: String, require: true },
-    name: { type: String, require: false },
-    activated: { type: Boolean, require: false, default: false },
-    avatar:{type:String ,require:false }
+    phone: { type: String, required: true },
+    name: { type: String, required: false },
+    activated: { type: Boolean, required: false, default: false },
+    avatar:{type:String ,required:false }
   },
   {
     timestamps: true,

@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import './roomModel.styles.css'
 import TextInput from '../Shared/Textinput/textinput.component'
+import { createRoom as create } from '../../Http/endpoints'
 import open from '../../images/globe.png'
 import social from '../../images/social.png'
 import locked from '../../images/lock.png'
@@ -10,9 +11,18 @@ const RoomsModal = ({onclose}) => {
   const [roomType , setRoomType] = useState('open');
   const [topic , setTopic] =useState('');
 
-  function createRoom()
+  async function createRoom()
   {
-
+    if(!topic)
+    {
+      return
+    }
+    try {
+      const {data} = await create({topic , roomType});
+      console.log(data)
+    } catch (error) {
+      console.log(error.message)
+    }
   }
   return (
     <div className='modalMask'>
