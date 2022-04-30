@@ -7,10 +7,11 @@ import social from '../../images/social.png'
 import locked from '../../images/lock.png'
 import start from '../../images/celebration.png'
 import closebtn from '../../images/close.png'
+import { useNavigate } from 'react-router-dom'
 const RoomsModal = ({onclose}) => {
   const [roomType , setRoomType] = useState('open');
   const [topic , setTopic] =useState('');
-
+  const navigate = useNavigate();
   async function createRoom()
   {
     if(!topic)
@@ -19,6 +20,7 @@ const RoomsModal = ({onclose}) => {
     }
     try {
       const {data} = await create({topic , roomType});
+      navigate(`/room/${data.id}` , {replace:true})
       console.log(data)
     } catch (error) {
       console.log(error)

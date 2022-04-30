@@ -12,6 +12,12 @@ class RoomService{
     })
     return room;
   }
+
+  async getAllRooms(types)
+  {
+    const rooms = await roomModel.find({roomType:{$in:types}});
+    return rooms
+  }
 }
 
 module.exports = new RoomService();
