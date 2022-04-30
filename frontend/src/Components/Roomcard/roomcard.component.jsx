@@ -4,7 +4,7 @@ import chatbubble from '../../images/chat-bubble.png'
 import peopleicon from '../../images/user-icon.png'
 const RoomCard = ({room }) => {
   return (
-    <div className='cardContainer'>
+    <div className='cardcontainer'>
       <h3 className='topic'>{room.topic}</h3>
       <div className="speakers">
         <div className="avatarimg">
