@@ -3,6 +3,7 @@ import './rooms.styles.css'
 import searchicon from '../../images/search-icon.png'
 import addroom from '../../images/add-room-icon.png'
 import RoomCard from '../../Components/Roomcard/roomcard.component'
+// import monkey from '../../images/monkey-avatar.png'
 import RoomsModal from '../../Components/AddRoomModel/roomModel.compoenent'
 import { getAllRooms } from '../../Http/endpoints'
 // const rooms = [
@@ -86,6 +87,7 @@ const Rooms = () => {
     {
       const {data} = await getAllRooms();
       setRooms(data);
+      console.log(data)
     };
     fetchRooms();
   },[])

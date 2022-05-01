@@ -14,16 +14,17 @@ const RoomsModal = ({onclose}) => {
   const navigate = useNavigate();
   async function createRoom()
   {
+    
+    try {
     if(!topic)
     {
       return
     }
-    try {
       const {data} = await create({topic , roomType});
       navigate(`/room/${data.id}`)
       console.log(data)
     } catch (error) {
-      console.log(error)
+      console.log(error.message)
     }
   }
   return (

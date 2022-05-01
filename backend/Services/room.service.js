@@ -1,10 +1,10 @@
-const roomModel = require("../models/room.model");
+const RoomModel = require("../models/room.model");
 
 class RoomService{
   async create(payload)
   {
     const{topic, roomType , ownerId} = payload;
-    const room = await roomModel.create({
+    const room = await RoomModel.create({
       topic,
       roomType,
       ownerId,
@@ -13,11 +13,13 @@ class RoomService{
     return room;
   }
 
-  async getAllRooms(types)
-  {
-    const rooms = await roomModel.find({ roomType: { $in: types } }).populate('speakers').populate('ownerId').exec();
-    return rooms
-  }
+  async getAllRooms(types) {
+        const rooms = await RoomModel.find({ roomType: { $in: types } })
+            .populate('speakers')
+            .populate('rooms')
+            .exec();
+        return rooms;
+    }
 }
 
 module.exports = new RoomService();
