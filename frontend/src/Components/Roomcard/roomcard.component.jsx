@@ -2,9 +2,11 @@ import React from 'react'
 import './roomcard.styles.css'
 import chatbubble from '../../images/chat-bubble.png'
 import peopleicon from '../../images/user-icon.png'
+import { useNavigate } from 'react-router-dom'
 const RoomCard = ({room }) => {
+  const navigate = useNavigate();
   return (
-    <div className='cardcontainer'>
+    <div onClick={()=>navigate(`/room/${room.id}`)} className='cardcontainer'>
       <h3 className='topic'>{room.topic}</h3>
       <div className={`speakers ${room.speakers.length === 1?'singlespeaker':''}`}>
         <div className="avatarimg">

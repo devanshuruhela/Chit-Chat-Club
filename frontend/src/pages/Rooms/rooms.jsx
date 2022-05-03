@@ -87,7 +87,7 @@ const Rooms = () => {
     {
       const {data} = await getAllRooms();
       setRooms(data);
-      console.log(data)
+      // console.log(data)
     };
     fetchRooms();
   },[])
