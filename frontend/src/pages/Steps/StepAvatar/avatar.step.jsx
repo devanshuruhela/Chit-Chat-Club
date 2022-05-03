@@ -14,7 +14,7 @@ const StepAvatar = () => {
   const {name , avatar} = useSelector((state) => state.activate)
   const [image , setImage] = useState(avatarimage)
   const [loader , setloader] = useState(false);
-  const [mounted , setMounted ] = useState(false)
+  // const [mounted , setMounted ] = useState(false);
 
   function changeimage(e)
   {
@@ -38,9 +38,8 @@ const StepAvatar = () => {
     try {
       const {data} = await activate({name , avatar})
       if (data.auth) {
-        if(!mounted){
                 dispatch(setAuth(data));}
-            }
+          
           
     } catch (error) {
       console.log(error)
@@ -52,13 +51,6 @@ const StepAvatar = () => {
     }
   }
 
-  useEffect(()=>
-  {
-    return () =>
-    {
-      setMounted(true)
-    }
-  },[])
   if(loader)
   return <Loader message='Activation in Progress...'/>
   return (
