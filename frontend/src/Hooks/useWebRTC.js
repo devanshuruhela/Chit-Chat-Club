@@ -1,17 +1,20 @@
 import { useCallback, useEffect, useRef } from "react";
 import { useStateWithCallback } from "./useStateWithCallback";
-
+import socketInit from '../socket/socket'
 export const useWebRCT= (roomId ,user) =>
 {
   const [clients, setClients] = useStateWithCallback([]);
   const audioElements = useRef({});
   const connections =useRef({});
-  const localMediaStream = useRef(null)
+  const localMediaStream = useRef(null);
+  const socket = useRef(null);
 
-  const provideRef=(instance, userId) =>
-    {
-      audioElements.current[userId] = instance
-    }
+  useEffect(()=>
+  {
+    socket.current = socketInit();
+  },[])
+
+ 
 
   const addNewClients = useCallback((newClient , cb)=>
   {
@@ -42,9 +45,14 @@ export const useWebRCT= (roomId ,user) =>
           localaudioelt.volume = 0;
           localaudioelt.srcObject = localMediaStream.current
         }
+
+
       })
     });
   },[])
-  
+   const provideRef=(instance, userId) =>
+    {
+      audioElements.current[userId] = instance
+    }
   return {clients ,provideRef}
 }

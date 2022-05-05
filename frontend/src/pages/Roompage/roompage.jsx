@@ -6,7 +6,7 @@ const RoomPage = () => {
   const {id : roomId} =useParams();
   const user = useSelector(state=> state.auth.user)
   const {clients , provideRef} = useWebRCT(roomId , user)
-
+  console.log(clients)
   return (
     <div>
       <h1>All connected Clients</h1>

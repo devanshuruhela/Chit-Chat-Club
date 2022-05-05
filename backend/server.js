@@ -5,6 +5,17 @@ const app = express();
 const cors = require('cors')
 const router =require('./routes')
 const cookieParser = require("cookie-parser");
+const server = require('http').createServer(app);
+
+const io = require('socket.io')(server , {
+  cors:
+  {
+    origin:process.env.FRONT_URL,
+    methods:['GET', 'POST'],
+  }
+});
+
+
 PORT = process.env.PORT || 5000;
 app.use(cookieParser());
 const corsOption = {
@@ -22,4 +33,11 @@ app.get('/' ,(req , res)=>
 
 app.use(router);
 
-app.listen(PORT ,()=>console.log(`Server listening on ${PORT}`));
+// socket
+io.on('connection' , (socket) =>
+{
+  console.log('new conncetion' , socket.id)
+})
+
+
+server.listen(PORT ,()=>console.log(`Server listening on ${PORT}`));
