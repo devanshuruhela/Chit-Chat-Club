@@ -5,6 +5,7 @@ const app = express();
 const cors = require('cors')
 const router =require('./routes')
 const cookieParser = require("cookie-parser");
+const ACTIONS = require('./actions');
 const server = require('http').createServer(app);
 
 const io = require('socket.io')(server , {
@@ -34,9 +35,21 @@ app.get('/' ,(req , res)=>
 app.use(router);
 
 // socket
+
+const socketUserMapping = {
+
+}
 io.on('connection' , (socket) =>
 {
   console.log('new conncetion' , socket.id)
+  socket.on(ACTIONS.JOIN, ({roomId , user})=>
+  {
+    socketUserMapping[socket.id] = user;
+    const clients = Array.from(io.sockets.adapter.rooms.get(roomId)||[]);
+    console.log(clients)
+  })
+
+  
 })
 
 

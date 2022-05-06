@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useRef } from "react";
 import { useStateWithCallback } from "./useStateWithCallback";
-import socketInit from '../socket/socket'
+import {socketInit} from '../socket/socket'
+import { ACTIONS } from "../actions";
 export const useWebRCT= (roomId ,user) =>
 {
   const [clients, setClients] = useStateWithCallback([]);
@@ -46,6 +47,7 @@ export const useWebRCT= (roomId ,user) =>
           localaudioelt.srcObject = localMediaStream.current
         }
 
+        socket.current.emit(ACTIONS.JOIN ,{roomId, user})
 
       })
     });
