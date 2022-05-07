@@ -46,6 +46,11 @@ io.on('connection' , (socket) =>
   {
     socketUserMapping[socket.id] = user;
     const clients = Array.from(io.sockets.adapter.rooms.get(roomId)||[]);
+    clients.forEach(clientId=>{
+      io.to(clientId).emit(ACTIONS.ADD_PEER ,{})
+    })
+
+    socket.emit(ACTIONS.ADD_PEER)
     console.log(clients)
   })
 
