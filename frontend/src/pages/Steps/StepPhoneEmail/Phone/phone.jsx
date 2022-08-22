@@ -1,39 +1,42 @@
-import React, { useState } from 'react'
-import Card from '../../../../Components/Shared/Card/card.component'
-import Button from '../../../../Components/Shared/Button/button.component'
-import logo from '../../../../images/phone.png'
-import TextInput from '../../../../Components/Shared/Textinput/textinput.component'
-import { sendOtp } from '../../../../Http/endpoints'
-
+import React, { useState } from 'react';
+import Card from '../../../../components/shared/Card/Card';
+import Button from '../../../../components/shared/Button/Button';
+import TextInput from '../../../../components/shared/TextInput/TextInput';
+import styles from '../StepPhoneEmail.module.css';
+import { sendOtp } from '../../../../http/index';
 import { useDispatch } from 'react-redux';
-import { setOtp } from '../../../../store/authSlice'
-const Phone = ({onNext}) => {
-  const [phoneNum , setPhoneNum] = useState('');
+import { setOtp } from '../../../../store/authSlice';
 
-  const dispatch = useDispatch();
+const Phone = ({ onNext }) => {
+    const [phoneNumber, setPhoneNumber] = useState('');
+    const dispatch = useDispatch();
 
-  async function submit()
-  {
-    if(!phoneNum)
-    return
-    const {data} = await sendOtp({phone:phoneNum});
-    console.log(data);
-    dispatch(setOtp({phone:data.phone , hash:data.hash}))
-    onNext();
-  }
-  return (
-    <Card logo={logo} heading='Enter your Phone Number'>
-          <TextInput type='text' value ={phoneNum} onChange={(e)=> setPhoneNum(e.target.value)}/>
-          <div>
-            <div className='actionbtn'>
-            <Button btntext="Next" onClick={submit}></Button>
+    async function submit() {
+        if (!phoneNumber) 
+        return;
+        const { data } = await sendOtp({ phone: phoneNumber });
+        console.log(data);
+        dispatch(setOtp({ phone: data.phone, hash: data.hash }));
+        onNext();
+    }
+
+    return (
+        <Card title="Enter you phone number" icon="phone">
+            <TextInput
+                value={phoneNumber}
+                onChange={(e) => setPhoneNumber(e.target.value)}
+            />
+            <div>
+                <div className={styles.actionButtonWrap}>
+                    <Button text="Next" onClick={submit} />
+                </div>
+                <p className={styles.bottomParagraph}>
+                    By entering your number, you’re agreeing to our Terms of
+                    Service and Privacy Policy. Thanks!
+                </p>
             </div>
-          <p className='btnpara'>
-            By entering your number, you're agreeing to our Terms of service and Privacy Policy. Thanks!
-          </p>
-        </div>
-      </Card>
-  )
-}
+        </Card>
+    );
+};
 
-export default Phone
+export default Phone;

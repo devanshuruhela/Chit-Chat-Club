@@ -1,12 +1,13 @@
-import React from 'react'
-import Card from '../Card/card.component'
-import './loader.styles.css'
-const Loader = ({message}) => {
-  return (
-    <div className='loadercontainer'>
-      <Card>
-        <svg
-                    className='spinner'
+import React from 'react';
+import Card from '../Card/Card';
+import styles from './Loader.module.css';
+
+const Loader = ({ message }) => {
+    return (
+        <div className="cardWrapper">
+            <Card>
+                <svg
+                    className={styles.spinner}
                     width="42"
                     height="42"
                     fill="none"
@@ -24,10 +25,10 @@ const Loader = ({message}) => {
                         fill="#5453E0"
                     />
                 </svg>
-        <span className="message">{message}</span>
-      </Card>
-    </div>
-  )
-}
+                <span className={styles.message}>{message}</span>
+            </Card>
+        </div>
+    );
+};
 
-export default Loader
+export default Loader;

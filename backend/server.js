@@ -1,64 +1,75 @@
 require('dotenv').config();
-const DbConnect = require('./database')
 const express = require('express');
 const app = express();
-const cors = require('cors')
-const router =require('./routes')
-const cookieParser = require("cookie-parser");
-const ACTIONS = require('./actions');
 const server = require('http').createServer(app);
+const DbConnect = require('./database');
+const router = require('./routes');
+const cors = require('cors');
+const cookieParser = require('cookie-parser');
 
-const io = require('socket.io')(server , {
-  cors:
-  {
-    origin:process.env.FRONT_URL,
-    methods:['GET', 'POST'],
-  }
+const ACTIONS = require('./actions');
+
+const io = require('socket.io')(server, {
+    cors: {
+        origin: process.env.FRONT_URL,
+        methods: ['GET', 'POST'],
+    },
 });
 
-
-PORT = process.env.PORT || 5000;
 app.use(cookieParser());
 const corsOption = {
-  origin: [process.env.FRONT_URL],
-  credentials:true
+    origin: [process.env.FRONT_URL],
+    credentials: true,
 };
 app.use(cors(corsOption));
-app.use('/storage',express.static('storage'))
+app.use('/storage', express.static('storage'));
 DbConnect();
-app.use(express.json({limit:'8mb'}))
-app.get('/' ,(req , res)=>
-{
-  res.send("Hello from server")
-})
+const PORT = process.env.PORT || 5000;
 
+app.use(express.json({ limit: '8mb' }));
 app.use(router);
 
-// socket
+app.get('/', (req, res) => {
+    res.send('Hello from express Js');
+});
 
-const socketUserMap = {
+// Sockets
+const socketUserMap = {};
 
-}
 io.on('connection', (socket) => {
     console.log('New connection', socket.id);
     socket.on(ACTIONS.JOIN, ({ roomId, user }) => {
         socketUserMap[socket.id] = user;
+
+        // console.log('Map', socketUserMap);
+
+        // get all the clients from io adapter
+        // console.log('joining');
         const clients = Array.from(io.sockets.adapter.rooms.get(roomId) || []);
+        // console.log('All connected clients', clients, io.sockets.adapter.rooms);
+        // Add peers and offers and all
+
         clients.forEach((clientId) => {
             io.to(clientId).emit(ACTIONS.ADD_PEER, {
                 peerId: socket.id,
                 createOffer: false,
                 user,
             });
+
+            // Send myself as well that much msgs how many clients
+
             socket.emit(ACTIONS.ADD_PEER, {
                 peerId: clientId,
                 createOffer: true,
                 user: socketUserMap[clientId],
             });
         });
+
+        // Join the room
         socket.join(roomId);
     });
 
+    // Handle Relay Ice event
     socket.on(ACTIONS.RELAY_ICE, ({ peerId, icecandidate }) => {
         io.to(peerId).emit(ACTIONS.ICE_CANDIDATE, {
             peerId: socket.id,
@@ -66,6 +77,7 @@ io.on('connection', (socket) => {
         });
     });
 
+    // Handle Relay SDP
     socket.on(ACTIONS.RELAY_SDP, ({ peerId, sessionDescription }) => {
         io.to(peerId).emit(ACTIONS.SESSION_DESCRIPTION, {
             peerId: socket.id,
@@ -74,6 +86,7 @@ io.on('connection', (socket) => {
     });
 
     socket.on(ACTIONS.MUTE, ({ roomId, userId }) => {
+        console.log('mute on server', userId);
         const clients = Array.from(io.sockets.adapter.rooms.get(roomId) || []);
         clients.forEach((clientId) => {
             io.to(clientId).emit(ACTIONS.MUTE, {
@@ -84,6 +97,7 @@ io.on('connection', (socket) => {
     });
 
     socket.on(ACTIONS.UNMUTE, ({ roomId, userId }) => {
+        console.log('unmute on server', userId);
         const clients = Array.from(io.sockets.adapter.rooms.get(roomId) || []);
         clients.forEach((clientId) => {
             io.to(clientId).emit(ACTIONS.UNMUTE, {
@@ -93,21 +107,10 @@ io.on('connection', (socket) => {
         });
     });
 
-    socket.on(ACTIONS.MUTE_INFO, ({ userId, roomId, isMute }) => {
-        const clients = Array.from(io.sockets.adapter.rooms.get(roomId) || []);
-        clients.forEach((clientId) => {
-            if (clientId !== socket.id) {
-                console.log('mute info');
-                io.to(clientId).emit(ACTIONS.MUTE_INFO, {
-                    userId,
-                    isMute,
-                });
-            }
-        });
-    });
-
     const leaveRoom = () => {
         const { rooms } = socket;
+        console.log('leaving', rooms);
+        // console.log('socketUserMap', socketUserMap);
         Array.from(rooms).forEach((roomId) => {
             const clients = Array.from(
                 io.sockets.adapter.rooms.get(roomId) || []
@@ -118,14 +121,18 @@ io.on('connection', (socket) => {
                     userId: socketUserMap[socket.id]?.id,
                 });
 
-                // socket.emit(ACTIONS.REMOVE_PEER, {
-                //     peerId: clientId,
-                //     userId: socketUserMap[clientId]?.id,
-                // });
+                socket.emit(ACTIONS.REMOVE_PEER, {
+                    peerId: clientId,
+                    userId: socketUserMap[clientId]?.id,
+                });
+
+                socket.leave(roomId);
             });
-            socket.leave(roomId);
         });
+
         delete socketUserMap[socket.id];
+
+        console.log('map', socketUserMap);
     };
 
     socket.on(ACTIONS.LEAVE, leaveRoom);
@@ -133,4 +140,4 @@ io.on('connection', (socket) => {
     socket.on('disconnecting', leaveRoom);
 });
 
-server.listen(PORT ,()=>console.log(`Server listening on ${PORT}`));
+server.listen(PORT, () => console.log(`Listening on port ${PORT}`));
